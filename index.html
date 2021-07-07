@@ -1,0 +1,87 @@
+a<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #div1,
+      #div2 {
+        height: 500px;
+        float: left;
+        width: 30%;
+        border: 1px solid #333;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 10px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #fff;
+        padding: 5px;
+        display: block;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      }
+
+      #div1 a {
+        background: brown;
+      }
+      #div2 a {
+        background: darkgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Drag and Drop</h2>
+    <p>Выберите услуги:</p>
+
+    <div id="div1" ondrop="drop(event, this)" ondragover="allowDrow(event)">
+      <a href="#" draggable="true" ondragstart="drag(event)" id="drag1"
+        >Омоложение</a
+      >
+      <a href="#" draggable="true" ondragstart="drag(event)" id="drag2"
+        >Массаж</a
+      >
+      <a href="#" draggable="true" ondragstart="drag(event)" id="drag3"
+        >Чистка лица</a
+      >
+    </div>
+    <div
+      id="div2"
+      ondrop="drop(event, this)"
+      ondragover="allowDrow(event)"
+    ></div>
+    <script>
+      let arr = [];
+      function allowDrow(ev) {
+        ev.preventDefault();
+      }
+
+      function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData("content", ev, target.textContent);
+      }
+
+      function drop(ev, block) {
+        ev.preventDefault();
+
+        let data = ev.dataTransfer.getData("text");
+        let content = ev.dataTransfer.getData("content");
+
+        if (block.id == "div2") {
+          if (arr.indexOf(content) == -1) {
+            arr.push(content);
+          }
+        }
+        if (block.id == "div1") {
+          if (arr.indexOf(content) != -1) {
+            arr.splice(arr.indexOf(content), 1);
+          }
+        }
+
+        block.appendChild(document.getElementById(data));
+
+        console.log(arr);
+      }
+    </script>
+  </body>
+</html>
